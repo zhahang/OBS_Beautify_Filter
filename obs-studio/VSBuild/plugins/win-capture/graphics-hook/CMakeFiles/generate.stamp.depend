@@ -1,0 +1,7 @@
+# CMake generation dependency list for this directory.
+D:/Dev/obs-studio/cmake/Modules/FindVulkan.cmake
+D:/Dev/obs-studio/plugins/win-capture/graphics-hook/CMakeLists.txt
+D:/Dev/obs-studio/plugins/win-capture/graphics-hook/graphics-hook-config.h.in
+D:/Software/CMake/share/cmake-3.19/Modules/FindPackageHandleStandardArgs.cmake
+D:/Software/CMake/share/cmake-3.19/Modules/FindPackageMessage.cmake
+D:/Software/CMake/share/cmake-3.19/Modules/FindPkgConfig.cmake

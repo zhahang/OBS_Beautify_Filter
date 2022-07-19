@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\obs-ffmpeg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\obs-ffmpeg-audio-encoders.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\obs-ffmpeg-nvenc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\obs-ffmpeg-output.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\obs-ffmpeg-mux.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\obs-ffmpeg-hls-mux.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\obs-ffmpeg-source.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\jim-nvenc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\jim-nvenc-helpers.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\Dev\obs-studio\VSBuild\plugins\obs-ffmpeg\obs-ffmpeg-config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\obs-ffmpeg-compat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\obs-ffmpeg-formats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\obs-ffmpeg-mux.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\jim-nvenc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Dev\obs-studio\plugins\obs-ffmpeg\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="D:\Dev\obs-studio\VSBuild\plugins\obs-ffmpeg\obs-ffmpeg.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{642B901A-8DD5-3FB4-BC37-A026A6CA411B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{EA418387-7A35-3229-A9CD-27B76832248D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

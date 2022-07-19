@@ -1,0 +1,6 @@
+# CMake generation dependency list for this directory.
+D:/Dev/obs-studio/plugins/enc-amf/CMakeLists.txt
+D:/Dev/obs-studio/plugins/enc-amf/ci/installer.in.iss
+D:/Dev/obs-studio/plugins/enc-amf/cmake/util.cmake
+D:/Dev/obs-studio/plugins/enc-amf/cmake/version.rc.in
+D:/Dev/obs-studio/plugins/enc-amf/include/version.hpp.in

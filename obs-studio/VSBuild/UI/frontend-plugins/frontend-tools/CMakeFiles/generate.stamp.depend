@@ -1,0 +1,4 @@
+# CMake generation dependency list for this directory.
+D:/Dev/obs-studio/UI/frontend-plugins/frontend-tools/CMakeLists.txt
+D:/Dev/obs-studio/UI/frontend-plugins/frontend-tools/frontend-tools-config.h.in
+D:/Dev/obs-studio/cmake/winrc/obs-module.rc.in

@@ -1,0 +1,5 @@
+# CMake generation dependency list for this directory.
+D:/Dev/obs-studio/cmake/winrc/obs-module.rc.in
+D:/Dev/obs-studio/deps/w32-pthreads/CMakeLists.txt
+D:/Dev/obs-studio/deps/w32-pthreads/w32-pthreadsConfig.cmake.in
+D:/Dev/obs-studio/deps/w32-pthreads/w32-pthreadsConfigVersion.cmake.in

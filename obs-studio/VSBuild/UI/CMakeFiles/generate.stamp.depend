@@ -1,0 +1,15 @@
+# CMake generation dependency list for this directory.
+D:/Dev/Qt/5.15.2/msvc2019_64/lib/cmake/Qt5Svg/Qt5SvgConfig.cmake
+D:/Dev/Qt/5.15.2/msvc2019_64/lib/cmake/Qt5Svg/Qt5SvgConfigVersion.cmake
+D:/Dev/Qt/5.15.2/msvc2019_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake
+D:/Dev/Qt/5.15.2/msvc2019_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake
+D:/Dev/Qt/5.15.2/msvc2019_64/lib/cmake/Qt5Xml/Qt5XmlConfig.cmake
+D:/Dev/Qt/5.15.2/msvc2019_64/lib/cmake/Qt5Xml/Qt5XmlConfigVersion.cmake
+D:/Dev/obs-studio/UI/CMakeLists.txt
+D:/Dev/obs-studio/UI/forms/obs.qrc
+D:/Dev/obs-studio/UI/ui-config.h.in
+D:/Dev/obs-studio/cmake/Modules/FindFFmpeg.cmake
+D:/Dev/obs-studio/cmake/Modules/FindLibcurl.cmake
+D:/Software/CMake/share/cmake-3.19/Modules/FindPackageHandleStandardArgs.cmake
+D:/Software/CMake/share/cmake-3.19/Modules/FindPackageMessage.cmake
+D:/Software/CMake/share/cmake-3.19/Modules/FindPkgConfig.cmake

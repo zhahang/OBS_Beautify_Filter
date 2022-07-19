@@ -1,0 +1,209 @@
+// frame filter for global beauty
+//
+// create by tangdou-zh 2021/01/26
+uniform float4x4 ViewProj;
+uniform texture2d image;
+
+//uniform float2 mul_val;
+//uniform float2 add_val;
+
+uniform float2 frame_size;
+uniform float tiny_body_x;
+uniform float tiny_body_y;
+// uniform int beauty_level;
+uniform float beauty_smooth;
+uniform float beauty_whiten;
+uniform float beauty_redden;
+
+
+sampler_state textureSampler {
+	Filter    = Linear;
+	AddressU  = Border;
+	AddressV  = Border;
+	BorderColor = 00000000;
+};
+
+// sampler_state textureSampler {
+// 	MinFilter = Linear;
+// 	MagFilter = Linear;
+// 	AddressU  = Clamp;
+// 	AddressV  = Clamp;
+// };
+
+struct VertData {
+	float4 pos : POSITION;
+	float2 uv  : TEXCOORD0;
+};
+
+VertData VSCrop(VertData v_in)
+{
+	v_in.uv.x = v_in.uv.x * (1.0 - tiny_body_x) + tiny_body_x / 2.0; // tiny ratio x
+	v_in.uv.y = v_in.uv.y * (1.0 - tiny_body_y) + tiny_body_y / 2.0; // tiny ratio y
+	VertData vert_out;
+	vert_out.pos = mul(float4(v_in.pos.xyz, 1.0), ViewProj);
+	// vert_out.uv  = v_in.uv * mul_val + add_val;
+	vert_out.uv  = v_in.uv;
+	return vert_out;
+}
+
+float hardlight(float color) 
+{
+	if (color <= 0.5)
+	{
+		color = color * color * 2.0;
+	}
+	else
+	{
+		color = 1.0 - ((1.0 - color) * (1.0 - color) * 2.0);
+	}	
+	return color;
+}
+
+float4 chooseLevel(int level)
+{
+	switch (level)
+	{
+		case 1: return float4(1.0, 1.0, 0.15, 0.15);
+		case 2: return float4(0.8, 0.9, 0.2, 0.2);
+		case 3: return float4(0.6, 0.8, 0.25, 0.25);
+		case 4: return float4(0.4, 0.7, 0.38, 0.3);
+		case 5: return float4(0.3, 0.6, 0.46, 0.35);
+		case 6: return float4(0.2, 0.5, 0.64, 0.4);
+		case 7: return float4(0.33 / 1.1, 0.63 / 1.1, 0.4 / 1.1, 0.35 / 1.1);
+		case 8: return float4(0.33 / 1.23, 0.63 / 1.23, 0.4 / 1.23, 0.35 / 1.23);
+		case 9: return float4(0.33 / 1.36, 0.63 / 1.36, 0.4 / 1.36, 0.35 / 1.36);
+		case 10: return float4(0.33 / 1.5, 0.63 / 1.5, 0.4 / 1.5, 0.35 / 1.5);
+		default: break;
+	}
+	return float4(0.4, 0.7, 0.38, 0.3);
+}
+
+// float clamp(float x, float min, float max) 
+// {
+// 	float temp = x > min ? x : min;
+// 	return temp < max ? temp : max;
+// }
+
+float pow_(float x, float y) // glsl pow
+{
+	if (x <= 0 || y <= 0) return x;
+	return pow(x, y); 
+}
+
+float4 beauty(VertData v_in) 
+{
+	const float frameWidth = frame_size.x;
+	const float frameHeight = frame_size.y;
+	// float4 params = chooseLevel(beauty_level);
+	float4 params;
+	params.r = 1.0 - 0.65 * beauty_smooth;
+	params.g = 1.0 - 0.58 * beauty_whiten;
+	params.b = 0.15 + 0.50 * beauty_redden;
+	params.a = 0.15 + 0.35 * beauty_redden; 
+
+	const float2 blurCoes[24] =
+	{
+		{0.0, -10.0},
+		{0.0, 10.0},
+		{-10.0, 0.0},
+		{10.0, 0.0},
+
+		{5.0, -8.0},
+		{5.0, 8.0},
+		{-5.0, 8.0},
+		{-5.0, -8.0},
+
+		{8.0, -5.0},
+		{8.0, 5.0},
+		{-8.0, 5.0},
+		{-8.0, -5.0},
+
+		{0.0, -6.0},
+		{0.0, 6.0},
+		{6.0, 0.0},
+		{-6.0, 0.0},
+
+		{-4.0, -4.0},
+		{-4.0, 4.0},
+		{4.0, -4.0},
+		{4.0, 4.0},
+
+		{-2.0, -2.0},
+		{-2.0, 2.0},
+		{2.0, -2.0},
+		{2.0, 2.0}
+	};
+	const float3 W = {0.299, 0.587, 0.114};
+	const float3x3 saturateMatrix =
+	{
+		1.1102, -0.0598, -0.061,
+		-0.0774, 1.0826, -0.1186,
+		-0.0228, -0.0228, 1.1772
+	}; 
+
+	float2 singleStepOffset = float2(2.0 / frameWidth, 2.0 / frameHeight);
+	float2 blurCoordinates[24];
+	for (int i = 0; i < 24; i++)
+		blurCoordinates[i] = v_in.uv + singleStepOffset * blurCoes[i];
+	
+	float sampleColor = image.Sample(textureSampler, v_in.uv).g * 22.0;
+
+	for (int i = 0; i < 24; i ++) {
+		if (i < 12) 
+			sampleColor += image.Sample(textureSampler, blurCoordinates[i]).g;
+		else if (i >= 12 && i < 20)
+			sampleColor += image.Sample(textureSampler, blurCoordinates[i]).g * 2.0;
+		else if (i >= 20)
+			sampleColor += image.Sample(textureSampler, blurCoordinates[i]).g * 3.0;
+	}
+
+	sampleColor = sampleColor / 62.0;
+
+	float3 centralColor = image.Sample(textureSampler, v_in.uv).rgb;
+
+	float heightpass = centralColor.g - sampleColor + 0.5;
+
+	for (int i = 0; i < 5; i++) 
+		heightpass = hardlight(heightpass);
+
+	float lumance = dot(centralColor, W);
+
+	float alpha = pow(lumance, params.r);
+
+	float3 smoothColor = centralColor + (centralColor - float3(heightpass, heightpass, heightpass)) * alpha * 0.1;
+
+	smoothColor.r = saturate(pow_(smoothColor.r, params.g));
+	smoothColor.g = saturate(pow_(smoothColor.g, params.g));
+	smoothColor.b = saturate(pow_(smoothColor.b, params.g));
+
+	float3 lvse = float3(1.0, 1.0, 1.0) - (float3(1.0, 1.0, 1.0) - smoothColor) * (float3(1.0, 1.0, 1.0) - centralColor);
+	float3 bl = max(smoothColor, centralColor);
+	float3 rg = 2.0 * centralColor * smoothColor + centralColor * centralColor - 2.0 * centralColor * centralColor * smoothColor;
+
+	float4 dstColor = float4(lerp(centralColor, lvse, alpha), 1.0);
+	dstColor.rgb = lerp(dstColor.rgb, bl, alpha);
+	dstColor.rgb = lerp(dstColor.rgb, rg, params.b);
+
+	float3 satColor = mul(dstColor.rgb, saturateMatrix);
+	dstColor.rgb = lerp(dstColor.rgb, satColor, params.a);
+
+	return dstColor;
+}
+
+float4 PSCrop(VertData v_in) : TARGET
+{
+	// return image.Sample(textureSampler, v_in.uv);
+	// float4 dstColor = image.Sample(textureSampler, v_in.uv);
+	// dstColor.b = 1.0;
+	// return dstColor;
+	return beauty(v_in);
+}
+
+technique Draw
+{
+	pass
+	{
+		vertex_shader = VSCrop(v_in);
+		pixel_shader  = PSCrop(v_in);
+	}
+}
